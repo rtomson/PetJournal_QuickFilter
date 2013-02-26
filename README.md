@@ -1,4 +1,6 @@
-PetJournal_QuickFilter
-======================
+##What is PetJournal_QuickFilter##
+PetJournal_QuickFilter is a filter extension to the PetJournal.
 
-WoW Addon - Provides pet family buttons for quickly filtering your pet list.
+##Features##
+* Quickly filter the pet list by family.
+
