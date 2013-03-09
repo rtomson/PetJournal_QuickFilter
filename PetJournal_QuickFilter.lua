@@ -42,13 +42,18 @@ for petType, suffix in ipairs(PET_TYPE_SUFFIX) do
                 end
             end
             
-            self.isActive = not self.isActive
             if self.isActive == true then
+                C_PetJournal.AddAllPetTypesFilter()
+            else
                 btn:LockHighlight()
                 C_PetJournal.ClearAllPetTypesFilter()
                 C_PetJournal.SetPetTypeFilter(self.petType, true)
-            else
-                C_PetJournal.AddAllPetTypesFilter()
+            end
+            self.isActive = not self.isActive
+            
+            -- Update PetJournalEnhanced if it's loaded
+            if PetJournalEnhanced.UpdatePets then
+                PetJournalEnhanced:UpdatePets()
             end
         end
     )
