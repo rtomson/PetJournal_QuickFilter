@@ -52,7 +52,7 @@ for petType, suffix in ipairs(PET_TYPE_SUFFIX) do
             self.isActive = not self.isActive
             
             -- Update PetJournalEnhanced if it's loaded
-            if PetJournalEnhanced.UpdatePets then
+            if PetJournalEnhanced and PetJournalEnhanced.UpdatePets then
                 PetJournalEnhanced:UpdatePets()
             end
         end
