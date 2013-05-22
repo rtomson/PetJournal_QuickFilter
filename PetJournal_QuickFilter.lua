@@ -1,5 +1,52 @@
 -- Move the pet list down
 PetJournalListScrollFrame:SetPoint("TOPLEFT", PetJournalLeftInset, 3, -60)
+-- PetJournalEnhanced draws their own ScrollFrame
+if PetJournalEnhancedListScrollFrame then
+    PetJournalEnhancedListScrollFrame:SetPoint("TOPLEFT", PetJournalLeftInset, 3, -60)
+end
+
+local QuickFilter_Function = function(self, button)
+    local activeCount = 0
+    for petType, _ in ipairs(PET_TYPE_SUFFIX) do
+        local btn = _G["PetJournalQuickFilterButton"..petType]
+        activeCount = activeCount + (btn.isActive and 1 or 0)
+    end
+    
+    local setAll = false
+    if "RightButton" == button and self.isActive and 1 == activeCount then
+        setAll = true
+    end
+    
+    for petType, _ in ipairs(PET_TYPE_SUFFIX) do
+        local btn = _G["PetJournalQuickFilterButton"..petType]
+        if "LeftButton" == button and (self == btn) then
+            btn.isActive = not btn.isActive
+        elseif "RightButton" == button then
+            if self == btn or setAll then
+                btn.isActive = true
+            else
+                btn.isActive = false
+            end
+        end
+        
+        if btn.isActive then
+            btn:LockHighlight()
+        else
+            btn:UnlockHighlight()
+        end
+        C_PetJournal.SetPetTypeFilter(btn.petType, btn.isActive)
+    end
+    
+    -- PetJournalEnhanced support
+    if PetJournalEnhanced then
+        local PJE = PetJournalEnhanced
+        if PJE.modules and PJE.modules.Sorting then
+            PJE.modules.Sorting:UpdatePets()
+        elseif PJE.UpdatePets then
+            PJE:UpdatePets()
+        end
+    end
+end
 
 -- Create the pet type buttons
 for petType, suffix in ipairs(PET_TYPE_SUFFIX) do
@@ -28,33 +75,9 @@ for petType, suffix in ipairs(PET_TYPE_SUFFIX) do
     highlight:SetPoint("CENTER")
     btn:SetHighlightTexture(highlight, "BLEND")
     
-    btn.isActive = false
+    btn:LockHighlight()
+    btn.isActive = true
     btn.petType = petType
     
-    btn:RegisterForClicks("LeftButtonUp")
-    btn:SetScript("OnMouseUp",
-        function(self)
-            for petType, suffix in ipairs(PET_TYPE_SUFFIX) do
-                local btn = _G["PetJournalQuickFilterButton"..petType]
-                btn:UnlockHighlight()
-                if not (self == btn) then
-                    btn.isActive = false
-                end
-            end
-            
-            if self.isActive == true then
-                C_PetJournal.AddAllPetTypesFilter()
-            else
-                btn:LockHighlight()
-                C_PetJournal.ClearAllPetTypesFilter()
-                C_PetJournal.SetPetTypeFilter(self.petType, true)
-            end
-            self.isActive = not self.isActive
-            
-            -- Update PetJournalEnhanced if it's loaded
-            if PetJournalEnhanced and PetJournalEnhanced.UpdatePets then
-                PetJournalEnhanced:UpdatePets()
-            end
-        end
-    )
+    btn:SetScript("OnMouseUp", QuickFilter_Function)
 end
