@@ -9,32 +9,27 @@ local QuickFilter_Function = function(self, button)
     local activeCount = 0
     for petType, _ in ipairs(PET_TYPE_SUFFIX) do
         local btn = _G["PetJournalQuickFilterButton"..petType]
-        activeCount = activeCount + (btn.isActive and 1 or 0)
-    end
-    
-    local setAll = false
-    if "RightButton" == button and self.isActive and 1 == activeCount then
-        setAll = true
-    end
-    
-    for petType, _ in ipairs(PET_TYPE_SUFFIX) do
-        local btn = _G["PetJournalQuickFilterButton"..petType]
-        if "LeftButton" == button and (self == btn) then
-            btn.isActive = not btn.isActive
-        elseif "RightButton" == button then
-            if self == btn or setAll then
+        if "LeftButton" == button then
+            if self == btn and (not btn.isActive) then
                 btn.isActive = true
             else
                 btn.isActive = false
             end
+        elseif "RightButton" == button and (self == btn) then
+            btn.isActive = not btn.isActive
         end
         
         if btn.isActive then
             btn:LockHighlight()
+            activeCount = activeCount + 1
         else
             btn:UnlockHighlight()
         end
         C_PetJournal.SetPetTypeFilter(btn.petType, btn.isActive)
+    end
+    
+    if 0 == activeCount then
+        C_PetJournal.AddAllPetTypesFilter()
     end
     
     -- PetJournalEnhanced support
@@ -75,8 +70,7 @@ for petType, suffix in ipairs(PET_TYPE_SUFFIX) do
     highlight:SetPoint("CENTER")
     btn:SetHighlightTexture(highlight, "BLEND")
     
-    btn:LockHighlight()
-    btn.isActive = true
+    btn.isActive = false
     btn.petType = petType
     
     btn:SetScript("OnMouseUp", QuickFilter_Function)
