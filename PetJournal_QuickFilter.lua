@@ -1,3 +1,5 @@
+local ASCENDING =  1
+local DESCENDING = 2
 -- Move the pet list down
 PetJournalListScrollFrame:SetPoint("TOPLEFT", PetJournalLeftInset, 3, -55)
 -- PetJournalEnhanced draws their own ScrollFrame
@@ -56,6 +58,13 @@ local Favorites_Function = function(self, button)
     if PetJournalEnhanced then
         local PJE = PetJournalEnhanced
         if PJE.modules and PJE.modules.Sorting then
+			if ("RightButton" == button) then 
+				if PJE.modules.Sorting.sorting.order == ASCENDING then 
+					PJE.modules.Sorting.sorting.order = DESCENDING
+				else
+					PJE.modules.Sorting.sorting.order = ASCENDING
+				end
+			end
             PJE.modules.Sorting:UpdatePets()
         elseif PJE.UpdatePets then
             PJE:UpdatePets()
