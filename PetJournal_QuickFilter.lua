@@ -65,6 +65,9 @@ end
 
 local maxPetType = 0
 
+local totalActiveCount = 0
+local totalCount = 0
+
 -- Create the pet type buttons
 for petType, suffix in ipairs(PET_TYPE_SUFFIX) do
     local btn = CreateFrame("Button", "PetJournalQuickFilterButton"..petType, PetJournalLeftInset)
@@ -93,10 +96,28 @@ for petType, suffix in ipairs(PET_TYPE_SUFFIX) do
     highlight:SetPoint("CENTER")
     btn:SetHighlightTexture(highlight, "BLEND")
     
-    btn.isActive = false
     btn.petType = petType
     
     btn:SetScript("OnMouseUp", QuickFilter_Function)
+	
+	if C_PetJournal.IsPetTypeFiltered(petType) == false then
+		btn.isActive = true
+		totalActiveCount = totalActiveCount + 1
+		btn:LockHighlight()
+	else
+		btn.isActive = false
+	end
+	
+	totalCount = totalCount + 1
+end
+
+-- If they are all active then uncheck all of them
+if (totalCount == totalActiveCount) then
+	for petType, _ in ipairs(PET_TYPE_SUFFIX) do
+        local btn = _G["PetJournalQuickFilterButton"..petType]
+		btn.isActive = false
+		btn:UnlockHighlight()
+	end
 end
 
 local btn = CreateFrame("Button", "PetJournalQuickFilterButtonFavorites", PetJournalLeftInset)
