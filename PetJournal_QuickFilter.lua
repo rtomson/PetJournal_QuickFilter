@@ -43,11 +43,12 @@ local QuickFilter_Function = function(self, button)
     end
 end
 
--- Create the pet type buttons
-for petType, suffix in ipairs(PET_TYPE_SUFFIX) do
-    local btn = CreateFrame("Button", "PetJournalQuickFilterButton"..petType, PetJournalLeftInset)
+-- Create the pet type buttons, sorted according weakness
+-- Humanoid > Dragonkin > Magic > Flying > Aquatic > Elemental > Mechanical > Beast > Critter > Undead
+for petIndex, petType in ipairs({1, 2, 6, 3, 9, 7, 10, 8, 5, 4}) do
+    local btn = CreateFrame("Button", "PetJournalQuickFilterButton"..petIndex, PetJournalLeftInset)
     btn:SetSize(24, 24)
-    btn:SetPoint("TOPLEFT", PetJournalLeftInset, 6 + 25 * (petType-1), -33)
+    btn:SetPoint("TOPLEFT", PetJournalLeftInset, 6 + 25 * (petIndex-1), -33)
     
     local background = btn:CreateTexture(nil, "BACKGROUND")
     background:SetTexture("Interface\\PetBattles\\PetBattleHud")
@@ -57,7 +58,7 @@ for petType, suffix in ipairs(PET_TYPE_SUFFIX) do
     btn.Background = background
     
     local icon = btn:CreateTexture(nil, "ARTWORK")
-    icon:SetTexture("Interface\\PetBattles\\PetIcon-"..suffix)
+    icon:SetTexture("Interface\\PetBattles\\PetIcon-"..PET_TYPE_SUFFIX[petType])
     icon:SetTexCoord(0.79687500, 0.49218750, 0.50390625, 0.65625000)
     icon:SetSize(22, 22)
     icon:SetPoint("CENTER")
