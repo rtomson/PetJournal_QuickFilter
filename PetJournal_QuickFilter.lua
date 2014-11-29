@@ -71,7 +71,12 @@ for petIndex, petType in ipairs({1, 2, 6, 3, 9, 7, 10, 8, 5, 4}) do
     highlight:SetPoint("CENTER")
     btn:SetHighlightTexture(highlight, "BLEND")
     
-    btn.isActive = false
+    if not C_PetJournal.IsPetTypeFiltered(petType) then
+        btn.isActive = true
+        btn:LockHighlight()
+    else
+        btn.isActive = false
+    end
     btn.petType = petType
     
     btn:SetScript("OnMouseUp", QuickFilter_Function)
