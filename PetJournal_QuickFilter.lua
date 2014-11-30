@@ -45,6 +45,7 @@ end
 
 -- Create the pet type buttons, sorted according weakness
 -- Humanoid > Dragonkin > Magic > Flying > Aquatic > Elemental > Mechanical > Beast > Critter > Undead
+local activeCount = 0
 for petIndex, petType in ipairs({1, 2, 6, 3, 9, 7, 10, 8, 5, 4}) do
     local btn = CreateFrame("Button", "PetJournalQuickFilterButton"..petIndex, PetJournalLeftInset)
     btn:SetSize(24, 24)
@@ -74,10 +75,19 @@ for petIndex, petType in ipairs({1, 2, 6, 3, 9, 7, 10, 8, 5, 4}) do
     if not C_PetJournal.IsPetTypeFiltered(petType) then
         btn.isActive = true
         btn:LockHighlight()
+        activeCount = activeCount + 1
     else
         btn.isActive = false
     end
     btn.petType = petType
     
     btn:SetScript("OnMouseUp", QuickFilter_Function)
+end
+
+if #PET_TYPE_SUFFIX == activeCount then
+    for petIndex, _ in ipairs(PET_TYPE_SUFFIX) do
+        local btn = _G["PetJournalQuickFilterButton"..petIndex]
+        btn.isActive = false
+        btn:UnlockHighlight()
+    end
 end
