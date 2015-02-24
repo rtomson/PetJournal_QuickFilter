@@ -4,7 +4,7 @@
 ## Author: Windrunner-US:Integer
 ## Version: 5
 ## LoadOnDemand: 1
-## LoadWith: Blizzard_PetJournal
+## LoadWith: Blizzard_Collections
 ## X-Website: https://github.com/rtomson
 
 PetJournal_QuickFilter.lua
