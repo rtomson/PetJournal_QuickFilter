@@ -72,7 +72,7 @@ for petIndex, petType in ipairs({1, 2, 6, 3, 9, 7, 10, 8, 5, 4}) do
     highlight:SetPoint("CENTER")
     btn:SetHighlightTexture(highlight, "BLEND")
     
-    if not C_PetJournal.IsPetTypeChecked(petType) then
+    if C_PetJournal.IsPetTypeChecked(petType) then
         btn.isActive = true
         btn:LockHighlight()
         activeCount = activeCount + 1
