@@ -43,7 +43,7 @@ local QuickFilter_Function = function(self, button)
     end
 end
 
--- Create the pet type buttons, sorted according weakness
+-- Create the pet type buttons, sorted according to weakness
 -- Humanoid > Dragonkin > Magic > Flying > Aquatic > Elemental > Mechanical > Beast > Critter > Undead
 local activeCount = 0
 for petIndex, petType in ipairs({1, 2, 6, 3, 9, 7, 10, 8, 5, 4}) do
