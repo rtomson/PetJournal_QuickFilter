@@ -1,4 +1,4 @@
-## Interface: 80200
+## Interface: 90002
 ## Title: PetJournal Quick Filter
 ## Notes: Provides pet family buttons for quickly filtering your pet list.
 ## Author: Windrunner-US:Integer
