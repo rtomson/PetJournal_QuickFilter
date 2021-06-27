@@ -1,4 +1,4 @@
-## Interface: 90005
+## Interface: 90100
 ## Title: PetJournal Quick Filter
 ## Notes: Provides pet family buttons for quickly filtering your pet list.
 ## Author: Proudmoore-US:Skrrat
