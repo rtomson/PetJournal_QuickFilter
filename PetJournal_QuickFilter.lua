@@ -1,5 +1,5 @@
 -- Move the pet list down
-PetJournalListScrollFrame:SetPoint("TOPLEFT", PetJournalLeftInset, 3, -60)
+PetJournal.ScrollBox:SetPoint("TOPLEFT", PetJournalLeftInset, 3, -60)
 -- PetJournalEnhanced draws their own ScrollFrame
 if PetJournalEnhancedListScrollFrame then
     PetJournalEnhancedListScrollFrame:SetPoint("TOPLEFT", PetJournalLeftInset, 3, -60)
